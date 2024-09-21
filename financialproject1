@@ -1,0 +1,39 @@
+import datetime
+
+class FinancialSystem:
+    def __init__(self):
+        self.transactions = []
+
+    def record_income(self, amount, description):
+        self.transactions.append({"type": "income", "amount": amount, "description": description})
+
+    def record_outgoing(self, amount, description):
+        self.transactions.append({"type": "outgoing", "amount": amount, "description": description})
+
+    def get_daily_balance(self, date):
+        daily_income = 0
+        daily_outgoing = 0
+        for transaction in self.transactions:
+            if transaction["date"] == date:
+                if transaction["type"] == "income":
+                    daily_income += transaction["amount"]
+                else:
+                    daily_outgoing += transaction["amount"]
+        return daily_income - daily_outgoing
+
+    def print_daily_report(self, date):
+        balance = self.get_daily_balance(date)
+        print(f"Daily Balance for {date}: {balance}")
+
+# Example usage:
+financial_system = FinancialSystem()
+
+# Record transactions
+financial_system.record_income(1000, "Sales")
+financial_system.record_outgoing(500, "Rent")
+financial_system.record_income(800, "Services")
+financial_system.record_outgoing(200, "Utilities")
+
+# Get daily balance
+today = datetime.date.today()
+financial_system.print_daily_report(today)
